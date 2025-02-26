@@ -1,6 +1,7 @@
 import { BoardConstants } from "../constants";
+import { PieceType, Side } from "../types";
 import { Coord } from "./Coord";
-import { Piece, PieceType, Side } from "./Piece";
+import { Piece } from "./Piece";
 import { SideList } from "./SideList";
 
 export class Board {
@@ -12,8 +13,8 @@ export class Board {
    constructor(fen_string = BoardConstants.FEN_STARTING_POSITION) {
       this.m_side_to_move = Side.WHITE;
       this.m_board = Board.parse_fen(fen_string);
-      this.m_white_pieces = new SideList();
-      this.m_black_pieces = new SideList();
+      this.m_white_pieces = new SideList(Side.WHITE);
+      this.m_black_pieces = new SideList(Side.BLACK);
 
       this.init_board();
    }
@@ -24,6 +25,13 @@ export class Board {
 
    public get side_to_move(): Side {
       return this.m_side_to_move;
+   }
+
+   public get pieces(): Record<string, Piece> {
+      return {
+         ...this.m_white_pieces.pieces,
+         ...this.m_black_pieces.pieces,
+      };
    }
 
    public piece_at(coord: Coord): Piece {

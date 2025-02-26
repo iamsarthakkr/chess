@@ -1,29 +1,33 @@
-export enum PieceType {
-   NONE = 0,
-   PAWN = 1,
-   KNIGHT = 2,
-   BISHOP = 3,
-   ROOK = 4,
-   QUEEN = 5,
-   KING = 6,
-}
-
-export enum Side {
-   BLACK = 0,
-   WHITE = 1,
-}
+import { PIECE_TO_CHAR_MAP } from "../constants";
+import { PieceType, Side } from "../types";
 
 export class Piece extends Number {
    constructor(pieceType: PieceType, side: Side) {
-      super((side << 3) + pieceType);
+      super(side | pieceType);
    }
 
-   public get type() {
+   public get this() {
+      return this.valueOf();
+   }
+   public get type(): PieceType {
       return this.valueOf() & 0b0111;
    }
 
    public get side(): Side {
-      return this.valueOf() >> 3;
+      return this.valueOf() & 0b1000;
+   }
+
+   public get is_white() {
+      return this.side === Side.WHITE;
+   }
+   public get is_black() {
+      return !this.is_white;
+   }
+
+   public toString() {
+      const sym = PIECE_TO_CHAR_MAP[this.type];
+      if (this.type === PieceType.NONE) return sym;
+      return this.is_white ? sym.toUpperCase() : sym;
    }
 
    public static readonly WHITE_PAWN = new Piece(PieceType.PAWN, Side.WHITE);
@@ -54,7 +58,9 @@ export class Piece extends Number {
 
    public static readonly EMPTY_PIECE = new Piece(PieceType.NONE, 0);
 
-   public static get_piece_from_char(piece: string): Piece {
+   public static get_piece_from_char(piece: string, side?: Side): Piece {
+      if (side === Side.WHITE) piece = piece.toUpperCase();
+
       switch (piece) {
          case "P":
             return Piece.WHITE_PAWN;
@@ -84,4 +90,8 @@ export class Piece extends Number {
             return Piece.EMPTY_PIECE;
       }
    }
+
+   public static PIECE_LIST() {}
+
+   public static get_piece(piece: Piece, side: Side) {}
 }
