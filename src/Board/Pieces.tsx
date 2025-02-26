@@ -1,7 +1,5 @@
 import React from "react";
-import Draggable, { DraggableEventHandler } from "react-draggable";
 import styled from "styled-components";
-import { get_board_coordinates } from "../utils";
 import { Piece } from "../Piece";
 
 type Coord = {

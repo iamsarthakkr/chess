@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex } from "../components/common";
 import { Board } from "../Board";
+import { AppContextProvider } from "./AppContextProvider";
 
 const AppContainer = styled(Flex)`
    justify-content: center;
@@ -13,7 +14,9 @@ const AppContainer = styled(Flex)`
 export const App = () => {
    return (
       <AppContainer>
-         <Board />
+         <AppContextProvider>
+            <Board />
+         </AppContextProvider>
       </AppContainer>
    );
 };
