@@ -1,5 +1,5 @@
 import React from "react";
-import { Board } from "../ChessEngine/Board";
+import { Board } from "../../ChessEngine/Board";
 
 export type IAppContext = {
    board: Board;

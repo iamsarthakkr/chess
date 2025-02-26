@@ -5,7 +5,7 @@ import {
    IAppContext,
    IAppContextActions,
 } from "./context";
-import { Board } from "../ChessEngine/Board";
+import { Board } from "../../ChessEngine/Board";
 
 interface IProps {
    children: React.ReactElement;

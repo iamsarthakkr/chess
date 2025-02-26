@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex } from "../components/common";
+import { Flex } from "../../components/common";
 import { Board } from "../Board";
 import { AppContextProvider } from "./AppContextProvider";
 

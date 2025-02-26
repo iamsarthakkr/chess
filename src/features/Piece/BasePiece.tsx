@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Flex } from "../components/common";
-import { BoardConstants } from "../constants";
+import { Flex } from "../../components/common";
+import { BoardConstants } from "../../constants";
 
 export const BasePiece = styled(Flex)`
    justify-content: center;

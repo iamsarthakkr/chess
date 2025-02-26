@@ -1,6 +1,6 @@
 import React from "react";
 import Draggable, { DraggableEventHandler } from "react-draggable";
-import { get_board_coordinates, get_piece_coordinates } from "../utils";
+import { get_board_coordinates, get_piece_coordinates } from "../../utils";
 import { BlackQueen } from "./BlackPieces";
 
 type Coord = {

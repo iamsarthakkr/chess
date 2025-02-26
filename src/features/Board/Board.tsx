@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex } from "../components/common";
+import { Flex } from "../../components/common";
 import { Pieces } from "./Pieces";
-import { BoardConstants } from "../constants";
+import { BoardConstants } from "../../constants";
 
 const BoardContainer = styled(Flex)`
    border: 1px solid black;
