@@ -70,7 +70,6 @@ export class SideList {
             break;
          }
          default: {
-            throw new Error("Invalid piece type");
          }
       }
    }

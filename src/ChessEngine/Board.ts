@@ -1,6 +1,6 @@
 import { BoardConstants } from "../constants";
 import { Coord } from "./Coord";
-import { Piece, Side } from "./Piece";
+import { Piece, PieceType, Side } from "./Piece";
 import { SideList } from "./SideList";
 
 export class Board {
@@ -38,10 +38,13 @@ export class Board {
       for (let x = 0; x < this.board.length; x++) {
          for (let y = 0; y < this.board[x].length; y++) {
             const piece = this.board[x][y];
+            if (piece.type === PieceType.NONE) {
+               continue;
+            }
             if (piece.side === Side.WHITE) {
-               this.m_white_pieces.add_piece(piece, new Coord(x, y));
+               this.m_white_pieces.add_piece(piece, new Coord(y, x));
             } else {
-               this.m_black_pieces.add_piece(piece, new Coord(x, y));
+               this.m_black_pieces.add_piece(piece, new Coord(y, x));
             }
          }
       }
@@ -49,18 +52,21 @@ export class Board {
 
    private static parse_fen(fen: string): Piece[][] {
       const fen_parts = fen.split(" ");
-      return fen_parts[0].split("/").map((row) => {
-         const pieces = [];
-         for (const piece of row) {
-            if (isNaN(parseInt(piece))) {
-               pieces.push(Piece.get_piece_from_char(piece));
-            } else {
-               for (let i = 0; i < parseInt(piece); i++) {
-                  pieces.push(Piece.EMPTY_PIECE);
+      return fen_parts[0]
+         .split("/")
+         .reverse()
+         .map((row) => {
+            const pieces = [];
+            for (const piece of row) {
+               if (isNaN(parseInt(piece))) {
+                  pieces.push(Piece.get_piece_from_char(piece));
+               } else {
+                  for (let i = 0; i < parseInt(piece); i++) {
+                     pieces.push(Piece.EMPTY_PIECE);
+                  }
                }
             }
-         }
-         return pieces;
-      });
+            return pieces;
+         });
    }
 }
