@@ -1,12 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { Center } from "../components";
+import { Flex } from "../components/common";
+import { Board } from "../Board";
 
-const AppContainer = styled(Center)`
+const AppContainer = styled(Flex)`
+   justify-content: center;
+   margin-top: 1em;
    font-weight: 500;
    font-size: 1.4em;
 `;
 
 export const App = () => {
-   return <AppContainer>Hello World</AppContainer>;
+   return (
+      <AppContainer>
+         <Board />
+      </AppContainer>
+   );
 };
