@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../components/common";
-import { Board } from "../Board";
+import { ChessBoard } from "../ChessBoard";
 import { AppContextProvider } from "./AppContextProvider";
 
 const AppContainer = styled(Flex)`
@@ -15,7 +15,7 @@ export const App = () => {
    return (
       <AppContainer>
          <AppContextProvider>
-            <Board />
+            <ChessBoard />
          </AppContextProvider>
       </AppContainer>
    );

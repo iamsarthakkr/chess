@@ -1,20 +1,16 @@
+import { Coord } from "../ChessEngine";
 import { BoardConstants } from "../constants";
 
-type Coord = {
-   x: number;
-   y: number;
-};
-
-export const get_board_coordinates = (coord: Coord): Coord => {
+export const get_offset_from_coord = (coord: Coord) => {
    return {
-      x: Math.floor(coord.x / BoardConstants.CELL_SIZE) + 1,
-      y: Math.floor(coord.y / BoardConstants.CELL_SIZE) + 1,
+      x: coord.x * BoardConstants.CELL_SIZE,
+      y: (BoardConstants.BOARD_SIZE - coord.y - 1) * BoardConstants.CELL_SIZE,
    };
 };
 
-export const get_piece_coordinates = (coord: Coord): Coord => {
-   return {
-      x: (coord.x - 1) * BoardConstants.CELL_SIZE,
-      y: (BoardConstants.BOARD_SIZE - coord.y) * BoardConstants.CELL_SIZE,
-   };
+export const get_coordinates_from_offset = (x: number, y: number) => {
+   return new Coord(
+      Math.floor(x / BoardConstants.CELL_SIZE),
+      BoardConstants.BOARD_SIZE - Math.floor(y / BoardConstants.CELL_SIZE) - 1
+   );
 };

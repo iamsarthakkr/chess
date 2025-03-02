@@ -1,1 +1,4 @@
-export { get_board_coordinates, get_piece_coordinates } from "./boardUtils";
+export {
+   get_coordinates_from_offset,
+   get_offset_from_coord,
+} from "./boardUtils";
