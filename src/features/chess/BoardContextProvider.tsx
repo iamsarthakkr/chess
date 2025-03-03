@@ -1,8 +1,9 @@
 import React from 'react';
-import { Board, Coord } from '../../ChessEngine';
 import { useStateRef } from '../hooks/useStateRef';
-import { Move } from '../../ChessEngine/Move';
 import { BoardContext, BoardContextActions, IBoardContext, IBoardContextActions } from './boardContext';
+import { Board } from '../../ChessEngine/Core';
+import { Move } from '../../ChessEngine/MoveGenerator';
+import { Coord } from '../../ChessEngine/types';
 
 interface IProps {
 	children: React.ReactElement;

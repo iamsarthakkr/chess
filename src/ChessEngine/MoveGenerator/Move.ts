@@ -1,4 +1,4 @@
-import { Coord } from './Coord';
+import { Coord } from '../types/ICoord';
 
 export class Move {
 	private readonly m_from: Coord;

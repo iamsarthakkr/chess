@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex } from '../../components/common';
 import { PieceList } from '../Piece';
-import { BoardConstants } from '../../constants';
 import { useAppContext } from '../App/useContext';
+import { BoardConstants } from '../../ChessEngine/constants';
 
 const BoardContainer = styled(Flex)`
 	position: relative;

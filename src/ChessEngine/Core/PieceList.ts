@@ -1,7 +1,7 @@
 import { BoardConstants } from '../constants';
-import { Coord } from './Coord';
+import { Coord } from '../types';
 import { Piece } from './Piece';
-import { BoardUtils } from './Utils';
+import { BoardUtils } from '../utils';
 
 export class PieceList {
 	// This is an array of coordinates of pieces

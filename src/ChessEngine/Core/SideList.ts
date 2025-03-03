@@ -1,5 +1,5 @@
 import { Symbols, PieceType, Side } from '../types';
-import { Coord } from './Coord';
+import { Coord } from '../types';
 import { Piece } from './Piece';
 import { PieceList } from './PieceList';
 

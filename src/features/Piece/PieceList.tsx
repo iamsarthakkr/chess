@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAppContext } from '../App/useContext';
 import { DraggablePiece } from './DraggablePiece';
-import { Coord } from '../../ChessEngine';
 import { get_coordinates_from_offset } from '../../utils';
 import { useBoardContext, useBoardContextActions } from '../chess/useBoardContext';
-import { PieceType } from '../../types';
+import { PieceType } from '../../ChessEngine/types';
+import { Coord } from '../../ChessEngine/types';
 
 export const PieceList = () => {
 	const { mouse_position_ref, board_element_ref } = useAppContext();

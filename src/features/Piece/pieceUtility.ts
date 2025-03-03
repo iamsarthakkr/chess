@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChessPiece } from './ChessPiece';
-import { PieceType } from '../../types';
-import { Piece } from '../../ChessEngine';
+import { Piece } from '../../ChessEngine/Core';
+import { PieceType } from '../../ChessEngine/types';
 
 export const WhitePawn = ChessPiece('assets/white_pawn.svg');
 export const WhiteKnight = ChessPiece('assets/white_knight.svg');

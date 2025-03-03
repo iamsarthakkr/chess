@@ -1,7 +1,6 @@
 import { BoardConstants } from '../constants';
-import { PieceType, Side } from '../types';
-import { Coord } from './Coord';
-import { Move } from './Move';
+import { Move } from '../MoveGenerator';
+import { Side, PieceType, Coord } from '../types';
 import { Piece } from './Piece';
 import { SideList } from './SideList';
 

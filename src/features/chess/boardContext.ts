@@ -1,5 +1,6 @@
 import React from 'react';
-import { Board, Coord } from '../../ChessEngine';
+import { Board } from '../../ChessEngine/Core';
+import { Coord } from '../../ChessEngine/types';
 
 export type IBoardContext = {
 	board: Board;

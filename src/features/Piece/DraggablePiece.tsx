@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import { Coord, Piece } from '../../ChessEngine';
 import { get_piece_to_render } from './pieceUtility';
 import { get_offset_from_coord } from '../../utils/boardUtils';
-import { BoardConstants } from '../../constants';
+import { CELL_SIZE } from '../../constants';
 import { useAppContext } from '../App/useContext';
 import { useBoardContext } from '../chess/useBoardContext';
+import { Piece } from '../../ChessEngine/Core';
+import { Coord } from '../../ChessEngine/types';
 
 interface IPosition {
 	x: number;
@@ -26,8 +27,8 @@ const DraggableContainer = styled.div.attrs<IDraggableContainerProps>((props) =>
 		},
 	};
 })`
-	width: ${() => `${BoardConstants.CELL_SIZE}px`};
-	height: ${() => `${BoardConstants.CELL_SIZE}px`};
+	width: ${() => `${CELL_SIZE}px`};
+	height: ${() => `${CELL_SIZE}px`};
 	position: absolute;
 `;
 
@@ -65,8 +66,8 @@ export const DraggablePiece = memo((props: DraggablePieceProps) => {
 		}
 
 		set_position({
-			x: mouse_position_ref.current.elementX - BoardConstants.CELL_SIZE / 2,
-			y: mouse_position_ref.current.elementY - BoardConstants.CELL_SIZE / 2,
+			x: mouse_position_ref.current.elementX - CELL_SIZE / 2,
+			y: mouse_position_ref.current.elementY - CELL_SIZE / 2,
 		});
 	}, [mouse_position_ref, coord]);
 
