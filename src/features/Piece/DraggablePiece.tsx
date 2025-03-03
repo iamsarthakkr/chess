@@ -5,6 +5,7 @@ import { get_piece_to_render } from './pieceUtility';
 import { get_offset_from_coord } from '../../utils/boardUtils';
 import { BoardConstants } from '../../constants';
 import { useAppContext } from '../App/useContext';
+import { useBoardContext } from '../chess/useBoardContext';
 
 interface IPosition {
 	x: number;
@@ -38,25 +39,26 @@ interface DraggablePieceProps {
 export const DraggablePiece = memo((props: DraggablePieceProps) => {
 	const { coord, piece } = props;
 
-	const { mouse_position_ref, dragging_coord, board_element_ref } = useAppContext();
+	const { mouse_position_ref, board_element_ref } = useAppContext();
+	const { move_start } = useBoardContext();
 
 	const [position, set_position] = React.useState<IPosition>(get_offset_from_coord(coord));
-	const dragging_coord_ref = React.useRef(dragging_coord);
-	const is_dragging = (dragging_coord_ref.current && dragging_coord_ref.current.valueOf() === coord.valueOf()) ?? false;
+	const move_start_ref = React.useRef(move_start);
+	const is_dragging = (move_start_ref.current && move_start_ref.current.valueOf() === coord.valueOf()) ?? false;
 
 	React.useEffect(() => {
 		set_position(get_offset_from_coord(coord));
 	}, [coord]);
 
 	React.useEffect(() => {
-		dragging_coord_ref.current = dragging_coord;
-	}, [dragging_coord]);
+		move_start_ref.current = move_start;
+	}, [move_start]);
 
 	const handle_drag = React.useCallback(() => {
 		if (!mouse_position_ref.current) {
 			return;
 		}
-		const is_dragging = dragging_coord_ref.current && dragging_coord_ref.current.valueOf() === coord.valueOf();
+		const is_dragging = move_start_ref.current && move_start_ref.current.valueOf() === coord.valueOf();
 
 		if (!is_dragging) {
 			return set_position(get_offset_from_coord(coord));
