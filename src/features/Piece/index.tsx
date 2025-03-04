@@ -1,1 +1,1 @@
-export { PieceList } from './PieceList';
+export { ChessPiece } from './ChessPiece';

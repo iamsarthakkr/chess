@@ -1,18 +1,18 @@
-import { Coord } from '../types/ICoord';
+import { ICoord } from '../types/ICoord';
 
 export class Move {
-	private readonly m_from: Coord;
-	private readonly m_to: Coord;
+	private readonly m_from: ICoord;
+	private readonly m_to: ICoord;
 
-	constructor(from: Coord, to: Coord) {
+	constructor(from: ICoord, to: ICoord) {
 		this.m_from = from;
 		this.m_to = to;
 	}
 
-	public get from(): Coord {
+	public get from(): ICoord {
 		return this.m_from;
 	}
-	public get to(): Coord {
+	public get to(): ICoord {
 		return this.m_to;
 	}
 }

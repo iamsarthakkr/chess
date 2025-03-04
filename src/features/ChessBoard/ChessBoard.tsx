@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from '../../components/common';
-import { PieceList } from '../Piece';
 import { useAppContext } from '../App/useContext';
 import { BoardConstants } from '../../ChessEngine/constants';
+import { DraggableList } from '../Draggable/DraggableList';
 
 const BoardContainer = styled(Flex)`
 	position: relative;
@@ -39,7 +39,7 @@ export const ChessBoard = () => {
 	return (
 		<BoardContainer ref={board_element_ref}>
 			{Board}
-			<PieceList />
+			<DraggableList />
 		</BoardContainer>
 	);
 };

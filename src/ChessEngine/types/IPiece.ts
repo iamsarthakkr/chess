@@ -1,3 +1,5 @@
+export type IPiece = number;
+
 export enum PieceType {
 	NONE = 0,
 	PAWN = 1,

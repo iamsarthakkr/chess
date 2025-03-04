@@ -1,12 +1,13 @@
 import { BoardConstants } from '../constants';
 import { Move } from '../MoveGenerator';
-import { Side, PieceType, Coord } from '../types';
+import { Coord } from './Coord';
 import { Piece } from './Piece';
 import { SideList } from './SideList';
+import { Side, PieceType, ICoord, IPiece } from '../types';
 
 export class Board {
 	private m_side_to_move: Side;
-	private readonly m_board: Piece[][];
+	private readonly m_board: IPiece[][];
 	private readonly m_white_pieces: SideList;
 	private readonly m_black_pieces: SideList;
 
@@ -19,7 +20,7 @@ export class Board {
 		this.init_board();
 	}
 
-	public get board(): Piece[][] {
+	public get board(): IPiece[][] {
 		return this.m_board;
 	}
 
@@ -35,38 +36,47 @@ export class Board {
 		return !this.white_to_move;
 	}
 
-	public get pieces(): Record<string, Piece> {
-		return {
-			...this.m_white_pieces.pieces,
-			...this.m_black_pieces.pieces,
-		};
+	public piece_at(coord: ICoord): IPiece {
+		const x = Coord.get_x(coord),
+			y = Coord.get_y(coord);
+		return this.m_board[y][x];
 	}
 
-	public piece_at(coord: Coord): Piece {
-		return this.m_board[coord.y][coord.x];
+	public is_valid_start(coord: ICoord) {
+		const x = Coord.get_x(coord),
+			y = Coord.get_y(coord);
+		const piece_to_move = this.board[y][x];
+		return piece_to_move !== Piece.EMPTY_PIECE && Piece.get_side(piece_to_move) === this.side_to_move;
 	}
 
-	public is_valid_start(coord: Coord) {
-		const piece_to_move = this.board[coord.y][coord.x];
-		return piece_to_move !== Piece.EMPTY_PIECE && piece_to_move.side === this.side_to_move;
-	}
-
-	public is_valid_end(coord: Coord) {
-		const piece_at = this.board[coord.y][coord.x];
-		return piece_at === Piece.EMPTY_PIECE || piece_at.side !== this.side_to_move;
+	public is_valid_end(coord: ICoord) {
+		const x = Coord.get_x(coord),
+			y = Coord.get_y(coord);
+		const piece_at = this.board[y][x];
+		return piece_at === Piece.EMPTY_PIECE || Piece.get_side(piece_at) !== this.side_to_move;
 	}
 
 	public make_move(move: Move): void {
 		const source_piece = this.piece_at(move.from);
 		const target_piece = this.piece_at(move.to);
 
-		if (source_piece.type === PieceType.NONE || source_piece.side !== this.m_side_to_move) {
+		const source_side = Piece.get_side(source_piece);
+		const source_type = Piece.get_type(source_piece);
+		const target_side = Piece.get_side(target_piece);
+		const target_type = Piece.get_type(target_piece);
+
+		const to_x = Coord.get_x(move.to),
+			to_y = Coord.get_y(move.to);
+		const from_x = Coord.get_x(move.from),
+			from_y = Coord.get_y(move.from);
+
+		if (source_type === PieceType.NONE || source_side !== this.m_side_to_move) {
 			return;
 		}
 
 		// Remove the target piece if it exists
-		if (target_piece.type !== PieceType.NONE) {
-			if (source_piece.side === target_piece.side) {
+		if (target_type !== PieceType.NONE) {
+			if (source_side === target_side) {
 				return;
 			}
 			if (this.white_to_move) {
@@ -74,7 +84,7 @@ export class Board {
 			} else {
 				this.m_white_pieces.remove_piece(target_piece, move.to);
 			}
-			this.board[move.to.y][move.to.x] = Piece.EMPTY_PIECE;
+			this.board[to_y][to_x] = Piece.EMPTY_PIECE;
 		}
 
 		// Move the source piece
@@ -83,8 +93,8 @@ export class Board {
 		} else {
 			this.m_black_pieces.move_piece(source_piece, move.from, move.to);
 		}
-		this.board[move.to.y][move.to.x] = source_piece;
-		this.board[move.from.y][move.from.x] = Piece.EMPTY_PIECE;
+		this.board[to_y][to_x] = source_piece;
+		this.board[from_y][from_x] = Piece.EMPTY_PIECE;
 		this.m_side_to_move = this.white_to_move ? Side.BLACK : Side.WHITE;
 	}
 
@@ -94,19 +104,21 @@ export class Board {
 		for (let x = 0; x < this.board.length; x++) {
 			for (let y = 0; y < this.board[x].length; y++) {
 				const piece = this.board[x][y];
-				if (piece.type === PieceType.NONE) {
+				const type = Piece.get_type(piece);
+				const side = Piece.get_side(piece);
+				if (type === PieceType.NONE) {
 					continue;
 				}
-				if (piece.side === Side.WHITE) {
-					this.m_white_pieces.add_piece(piece, new Coord(y, x));
+				if (side === Side.WHITE) {
+					this.m_white_pieces.add_piece(piece, Coord.from(x, y));
 				} else {
-					this.m_black_pieces.add_piece(piece, new Coord(y, x));
+					this.m_black_pieces.add_piece(piece, Coord.from(x, y));
 				}
 			}
 		}
 	}
 
-	private static parse_fen(fen: string): Piece[][] {
+	private static parse_fen(fen: string): IPiece[][] {
 		const fen_parts = fen.split(' ');
 		return fen_parts[0]
 			.split('/')

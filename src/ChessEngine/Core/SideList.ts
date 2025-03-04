@@ -1,5 +1,5 @@
-import { Symbols, PieceType, Side } from '../types';
-import { Coord } from '../types';
+import { Symbols, PieceType, Side, IPiece } from '../types';
+import { ICoord } from '../types';
 import { Piece } from './Piece';
 import { PieceList } from './PieceList';
 
@@ -24,130 +24,43 @@ export class SideList {
 		this.m_kings = new PieceList(Piece.get_piece_from_char(Symbols.KING, side));
 	}
 
-	public get pawns(): PieceList {
-		return this.m_pawns;
+	public move_piece(piece: IPiece, from: ICoord, to: ICoord) {
+		const piece_list = this.get_piece_list(piece);
+		piece_list.move_piece(from, to);
 	}
 
-	public get knights(): PieceList {
-		return this.m_knights;
+	public add_piece(piece: IPiece, square: ICoord) {
+		const piece_list = this.get_piece_list(piece);
+		piece_list.add_piece(square);
 	}
 
-	public get bishops(): PieceList {
-		return this.m_bishops;
+	public remove_piece(piece: IPiece, square: ICoord) {
+		const piece_list = this.get_piece_list(piece);
+		piece_list.remove_piece(square);
 	}
 
-	public get rooks(): PieceList {
-		return this.m_rooks;
-	}
-
-	public get queens(): PieceList {
-		return this.m_queens;
-	}
-
-	public get kings(): PieceList {
-		return this.m_kings;
-	}
-
-	public get pieces(): Record<string, Piece> {
-		return {
-			...this.m_pawns.pieces,
-			...this.m_knights.pieces,
-			...this.m_bishops.pieces,
-			...this.m_rooks.pieces,
-			...this.m_queens.pieces,
-			...this.m_kings.pieces,
-		};
-	}
-
-	public move_piece(piece: Piece, from: Coord, to: Coord) {
-		switch (piece.type) {
+	private get_piece_list(piece: IPiece) {
+		switch (Piece.get_type(piece)) {
 			case PieceType.PAWN: {
-				this.m_pawns.move_piece(from, to);
-				break;
+				return this.m_pawns;
 			}
 			case PieceType.KNIGHT: {
-				this.m_knights.move_piece(from, to);
-				break;
+				return this.m_knights;
 			}
 			case PieceType.BISHOP: {
-				this.m_bishops.move_piece(from, to);
-				break;
+				return this.m_bishops;
 			}
 			case PieceType.ROOK: {
-				this.m_rooks.move_piece(from, to);
-				break;
+				return this.m_rooks;
 			}
 			case PieceType.QUEEN: {
-				this.m_queens.move_piece(from, to);
-				break;
+				return this.m_queens;
 			}
 			case PieceType.KING: {
-				this.m_kings.move_piece(from, to);
-				break;
+				return this.m_kings;
 			}
 			default: {
-			}
-		}
-	}
-
-	public add_piece(piece: Piece, square: Coord) {
-		switch (piece.type) {
-			case PieceType.PAWN: {
-				this.m_pawns.add_piece(square);
-				break;
-			}
-			case PieceType.KNIGHT: {
-				this.m_knights.add_piece(square);
-				break;
-			}
-			case PieceType.BISHOP: {
-				this.m_bishops.add_piece(square);
-				break;
-			}
-			case PieceType.ROOK: {
-				this.m_rooks.add_piece(square);
-				break;
-			}
-			case PieceType.QUEEN: {
-				this.m_queens.add_piece(square);
-				break;
-			}
-			case PieceType.KING: {
-				this.m_kings.add_piece(square);
-				break;
-			}
-			default: {
-			}
-		}
-	}
-
-	public remove_piece(piece: Piece, square: Coord) {
-		switch (piece.type) {
-			case PieceType.PAWN: {
-				this.m_pawns.remove_piece(square);
-				break;
-			}
-			case PieceType.KNIGHT: {
-				this.m_knights.remove_piece(square);
-				break;
-			}
-			case PieceType.BISHOP: {
-				this.m_bishops.remove_piece(square);
-				break;
-			}
-			case PieceType.ROOK: {
-				this.m_rooks.remove_piece(square);
-				break;
-			}
-			case PieceType.QUEEN: {
-				this.m_queens.remove_piece(square);
-				break;
-			}
-			case PieceType.KING: {
-				this.m_kings.remove_piece(square);
-				break;
-			}
-			default: {
+				throw new Error('Invalid piece type');
 			}
 		}
 	}

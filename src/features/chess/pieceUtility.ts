@@ -1,7 +1,7 @@
 import React from 'react';
-import { ChessPiece } from './ChessPiece';
+import { ChessPiece } from '../Piece/ChessPiece';
+import { IPiece, PieceType } from '../../ChessEngine/types';
 import { Piece } from '../../ChessEngine/Core';
-import { PieceType } from '../../ChessEngine/types';
 
 export const WhitePawn = ChessPiece('assets/white_pawn.svg');
 export const WhiteKnight = ChessPiece('assets/white_knight.svg');
@@ -37,9 +37,11 @@ export const BLACK_PIECE_MAP: Record<PieceType, React.FC> = {
 	[PieceType.KING]: BlackKing,
 };
 
-export const get_piece_to_render = (piece: Piece) => {
-	if (piece.is_white) {
-		return WHITE_PIECE_MAP[piece.type];
+export const get_piece_to_render = (piece: IPiece) => {
+	const is_white = Piece.is_white(piece);
+	const type = Piece.get_type(piece);
+	if (is_white) {
+		return WHITE_PIECE_MAP[type];
 	}
-	return BLACK_PIECE_MAP[piece.type];
+	return BLACK_PIECE_MAP[type];
 };
